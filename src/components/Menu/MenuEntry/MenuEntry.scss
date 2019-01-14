@@ -1,0 +1,16 @@
+.MenuEntry {
+  cursor: pointer;
+  height: 32px;
+  line-height: 32px;
+  position: relative;
+
+  &:hover {
+    background: #e2e7f2;
+  }
+  &_is_active {
+    background: #f2d3d3;
+    & .MenuEntry__icon {
+      color: red;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+.MailList {
+  &__entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    & .MailList__entry:last-child {
+      border-bottom: 1px solid #a2add7;
+    }
+  }
+  &__entry {
+    border-top: 1px solid #a2add7;
+    padding: 5px;
+
+    &_info {
+      display: flex;
+      font-size:0.875em;
+      line-height:24px;
+    }
+    &_from {
+      flex-basis: 200px;
+      flex-grow: 0;
+      flex-shrink: 1;
+
+    }
+    &_subject {
+      flex-grow: 2;
+      flex-shrink: 1;
+      font-weight:bold;
+    }
+    &_toool {
+      flex-basis: 32px;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+
+    &_body {
+      display: none;
+      border:1px dotted #a2add7;
+      padding:10px;
+      margin:5px;
+      background: #dfe5f7;
+      border-radius:5px;
+      line-height:1.5em;
+    }
+    &_body_is_open {
+      display: block;
+    }
+  }
+}

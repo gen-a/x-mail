@@ -1,0 +1,59 @@
+.ModalWindow {
+  &_is_active {
+    & .ModalWindow {
+      &__underlay {
+        display: block;
+        background: rgba(255, 255, 255, 0.7);
+      }
+      &__window {
+        top: 50%;
+        transform: translateY(-50%) translateX(-50%);
+      }
+    }
+  }
+
+  &__underlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0);
+    transition: all 0.2s;
+  }
+  &__window {
+    width: 400px;
+    border: 2px solid #616ea1;
+    top: 100%;
+    left: 50%;
+    position: fixed;
+    transform: translateY(0) translateX(-50%);
+    transition: all 0.2s;
+  }
+
+  &__header {
+    background: #dae0f2;
+    display: flex;
+
+    &_name {
+      color: #616ea1;
+      flex-grow: 1;
+      flex-shrink: 1;
+      padding: 0 10px;
+      line-height: 38px;
+    }
+    &_close_tool {
+      flex-basis: 38px;
+      flex-grow: 0;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+  }
+  &__body {
+    background: white;
+    padding: 10px;
+  }
+
+}

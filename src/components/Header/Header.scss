@@ -1,0 +1,36 @@
+.Header {
+
+
+  display: flex;
+  position: sticky;
+
+  &__menu_toggle {
+    flex-basis: 38px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    position: relative;
+  }
+
+  &__logo {
+
+    box-sizing: border-box;
+    display: block;
+    flex-basis: 162px;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    &_image {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  &__search {
+    flex-grow: 1;
+  }
+  &__tools {
+    flex-basis: 46px;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+}
