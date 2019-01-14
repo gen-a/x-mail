@@ -10,7 +10,7 @@ class ResponsiveIcon extends Component {
     };
     // Set default props
     static defaultProps = {
-        backgroundColor: "#ccd1e2",
+        backgroundColor: "#e0e5f8",
         size: 32,
         iconSize:24,
         iconColor:'#616ea1'
