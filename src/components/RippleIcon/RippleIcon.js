@@ -20,11 +20,20 @@ class ResponsiveIcon extends Component {
         this.setState({isActive: true});
     };
     onMouseOut = () => {
-        this.setState({isActive: false});
+        this.setState({isActive: false, isClicked:false});
     };
 
-    getClassName = () =>
-        this.state.isActive ? "RippleIcon RippleIcon_is_active" : "RippleIcon";
+    getIfClass = (baseClass, additionalClass, condition) =>{
+        if(condition){
+            baseClass += " "+additionalClass;
+        }
+        return baseClass;
+    };
+
+    onClick= () => {
+        this.props.onClick();
+    };
+
 
 
     getBackgroundStyle = () => {
@@ -60,10 +69,14 @@ class ResponsiveIcon extends Component {
         iconContextProviderValue.className= "RippleIcon__icon";
 
         return (
-            <div className={this.getClassName()}
+            <div className={this.getIfClass(
+                "RippleIcon",
+                "RippleIcon_is_active",
+                this.state.isActive)
+            }
                  onMouseOver={() => this.onMouseOver()}
                  onMouseOut={() => this.onMouseOut()}
-                 onClick={onClick}
+                 onClick={() => this.onClick()}
                  style={containerStyle}
             >
                 <IconContext.Provider value={iconContextProviderValue}>

@@ -63,7 +63,7 @@ class MailList extends Component {
                     <div className="MailList__entry_info">
 
                         <div className="MailList__entry_tool">
-                            <IconContext.Provider value={{size:16, color:'#d2a977'}}>
+                            <IconContext.Provider value={{size:16, color:'#d27641'}}>
                                 <div style={{margin:'4px',cursor:'pointer'}}
                                      onClick={() => this.toggleStar(mail)}>
                                     {starIcon}
