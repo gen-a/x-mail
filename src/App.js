@@ -182,7 +182,9 @@ class App extends Component {
                 onClose={()=>this.closeNewMessageWindow()}
                 isOpen = {newMessageWindowIsOpen}
             >
-                <NewMailForm onSave = {this.saveNewMessage.bind(this)} />
+                <NewMailForm
+                    isActive = {newMessageWindowIsOpen}
+                    onSave = {this.saveNewMessage.bind(this)} />
             </ModalWindow>
         </Fragment>;
     }

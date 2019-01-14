@@ -8,7 +8,17 @@ class NewMailForm extends Component {
         body: '',
         from: 'my-email@example.com'
     };
-
+    onPressEnter(event){
+        if(event.keyCode === 13 && this.props.isActive) {
+            this.save();
+        }
+    }
+    componentDidMount(){
+        document.addEventListener("keydown", (e) => this.onPressEnter(e), false);
+    }
+    componentWillUnmount(){
+        document.removeEventListener("keydown", (e) => this.onPressEnter(e), false);
+    }
     save() {
         this.props.onSave({...this.state});
         this.setState({
