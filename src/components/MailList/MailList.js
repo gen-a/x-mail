@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import ResponsiveIcon from "../RippleIcon/RippleIcon";
-import {MdExpandMore, MdMarkunread, MdDrafts} from 'react-icons/md';
+import {MdExpandMore, MdMarkunread, MdDrafts, MdStarBorder, MdStar} from 'react-icons/md';
 import {IconContext} from "react-icons";
 
 import './MailList.scss';
@@ -25,8 +25,12 @@ class MailList extends Component {
             opened: opened
         });
     };
-
-
+    toggleStar = (mail) => {
+        this.props.toggleMailStar(mail.id, !mail.starred);
+    };
+    toggleStatus = (mail) => {
+        this.props.toggleMailStatus(mail.id, !mail.status);
+    };
     render() {
         const listItems = this.props.mails.map((mail) => {
             let bodyClass = "MailList__entry_body";
@@ -35,13 +39,25 @@ class MailList extends Component {
             }
 
             let readIcon = mail.status ? <MdDrafts/> : <MdMarkunread/>;
+            let starIcon = mail.starred ? <MdStar/> : <MdStarBorder/>;
 
             return (
                 <li key={mail.id} className="MailList__entry">
                     <div className="MailList__entry_info">
+
+                        <div className="MailList__entry_tool">
+                            <IconContext.Provider value={{size:16, color:'#d2a977'}}>
+                                <div style={{margin:'4px',cursor:'pointer'}}
+                                     onClick={() => this.toggleStar(mail)}>
+                                    {starIcon}
+                                </div>
+                            </IconContext.Provider>
+                        </div>
+
                         <div className="MailList__entry_tool">
                            <IconContext.Provider value={{size:16, color:'#bec2d2'}}>
-                                <div style={{margin:'4px'}}>
+                                <div style={{margin:'4px',cursor:'pointer'}}
+                                     onClick={() => this.toggleStatus(mail)}>
                                     {readIcon}
                                 </div>
                             </IconContext.Provider>
