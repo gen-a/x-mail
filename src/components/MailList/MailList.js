@@ -31,12 +31,29 @@ class MailList extends Component {
     toggleStatus = (mail) => {
         this.props.toggleMailStatus(mail.id, !mail.status);
     };
+
+    getIfClass = (baseClass, additionalClass, condition) =>{
+        if(condition){
+            baseClass += " "+additionalClass;
+        }
+        return baseClass;
+    };
+
     render() {
         const listItems = this.props.mails.map((mail) => {
-            let bodyClass = "MailList__entry_body";
-            if (this.state.opened.indexOf(mail.id) !== -1) {
-                bodyClass += " MailList__entry_body_is_open";
-            }
+
+            let bodyClass = this.getIfClass(
+                "MailList__entry_body",
+                "MailList__entry_body_is_open",
+                this.state.opened.indexOf(mail.id) !== -1
+            );
+
+            let subjectClass = this.getIfClass(
+                "MailList__entry_subject",
+                "MailList__entry_subject_emphasized",
+                !mail.status
+             );
+
 
             let readIcon = mail.status ? <MdDrafts/> : <MdMarkunread/>;
             let starIcon = mail.starred ? <MdStar/> : <MdStarBorder/>;
@@ -66,7 +83,7 @@ class MailList extends Component {
                         <div className="MailList__entry_from">
                             {mail.from}
                         </div>
-                        <div className="MailList__entry_subject">
+                        <div className={subjectClass}>
                             {mail.subject}
                         </div>
                         <div className="MailList__entry_tool">

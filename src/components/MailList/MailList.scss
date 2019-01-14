@@ -25,6 +25,8 @@
     &_subject {
       flex-grow: 2;
       flex-shrink: 1;
+    }
+    &_subject.MailList__entry_subject_emphasized {
       font-weight:bold;
     }
     &_toool {
