@@ -8,7 +8,17 @@ import './ModalWindow.scss';
 
 
 class ModalWindow extends Component {
-
+    escFunction(event){
+        if(event.keyCode === 27) {
+            this.props.onClose();
+        }
+    }
+    componentDidMount(){
+        document.addEventListener("keydown", (e) => this.escFunction(e), false);
+    }
+    componentWillUnmount(){
+        document.removeEventListener("keydown", (e) => this.escFunction(e), false);
+    }
     render() {
         const {isOpen, children, title, onClose} = this.props;
         let className = "ModalWindow";
