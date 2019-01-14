@@ -73,66 +73,42 @@ class App extends Component {
             activeList: id
         });
     };
-    changeMailStatusTo= (id, value) =>{
+
+    setMailAttribute = (id, attributeName, value) => {
         let mails = this.state.mailList[this.state.activeList].slice();
 
-        let upd = mails.map((item) => {
+        let updatedMails = mails.map((item) => {
             let newItem = {...item};
             if (newItem.id === id) {
-                newItem.status = value;
+                newItem[attributeName] = value;
             }
             return newItem;
         });
 
         this.setState({mailList:{
             ...this.state.mailList,
-            [this.state.activeList]:upd
+            [this.state.activeList]:updatedMails
         }});
 
+    };
+
+    changeMailStatusTo= (id, value) =>{
+        this.setMailAttribute(id, 'status', value);
     };
 
     changeMailStarred= (id, value) =>{
-
-        let mails = this.state.mailList[this.state.activeList].slice();
-
-        let upd = mails.map((item) => {
-            let newItem = {...item};
-            if (newItem.id === id) {
-                newItem.starred = value;
-            }
-            return newItem;
-        });
-
-        this.setState({mailList:{
-            ...this.state.mailList,
-            [this.state.activeList]:upd
-        }});
-
-
-
+        this.setMailAttribute(id, 'starred', value);
     };
+
     changeMailStatus = (id) => {
-
-        let mails = this.state.mailList[this.state.activeList].slice();
-
-        let upd = mails.map((item) => {
-            let newItem = {...item};
-            if (newItem.id === id) {
-                newItem.status = true;
-            }
-            return newItem;
-        });
-
-        this.setState({mailList:{
-            ...this.state.mailList,
-            [this.state.activeList]:upd
-        }});
-
+        this.setMailAttribute(id, 'status', true)
     };
+
     saveNewMessage(data){
 
         data.id = this.state.mailList.inbox.length+this.state.mailList.outbox.length;
-
+        data.starred = false;
+        data.status = true;
         let outboxMailList = this.state.mailList.outbox.slice();
 
         outboxMailList.unshift(data);
