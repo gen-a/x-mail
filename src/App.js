@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 
 import DashboardPage from "./components/DashboardPage/DashboardPage";
 import ContactsPage from "./components/ContactsPage/ContactsPage";
+import MailPage from "./components/MailPage/MailPage";
 
 class App extends Component {
     state = {
@@ -83,20 +84,12 @@ class App extends Component {
 
         this.setState({
             mailList: mailList,
-            newMessageWindowIsOpen: false,
+            isOpenNewMessageWindow: false,
         });
 
     };
 
-    getMailData = (id) => {
-        for (let member of this.state.mailList) {
-            for (let mail of member) {
-                if (mail.id === this.props.match.params.id) {
-                    return mail;
-                }
-            }
-        }
-    };
+
 
     getListLengths = () => {
         let mailQuantities = {};
@@ -155,6 +148,9 @@ class App extends Component {
 
         return (
             <Switch>
+                <Route path="/mail/:id"
+                       render={(props) => <MailPage  {...props} {...common} updateMailAttribute={(id, name, value) => this.updateMailAttribute(id, name, value)} />}
+                />
                 <Route path="/contacts"
                        render={(props) => <ContactsPage  {...props} {...common} />}
                 />

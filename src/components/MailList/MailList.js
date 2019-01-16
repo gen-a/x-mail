@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import ResponsiveIcon from "../RippleIcon/RippleIcon";
-import {MdExpandMore, MdMarkunread, MdDrafts, MdStarBorder, MdStar} from 'react-icons/md';
+import {MdDescription, MdExpandMore, MdMarkunread, MdDrafts, MdStarBorder, MdStar} from 'react-icons/md';
 import {IconContext} from "react-icons";
 
 import './MailList.scss';
+import {NavLink} from "react-router-dom";
 
 class MailList extends Component {
     state = {
@@ -25,15 +26,15 @@ class MailList extends Component {
         });
     };
 
-    getIfClass = (baseClass, additionalClass, condition) =>{
-        if(condition){
-            baseClass += " "+additionalClass;
+    getIfClass = (baseClass, additionalClass, condition) => {
+        if (condition) {
+            baseClass += " " + additionalClass;
         }
         return baseClass;
     };
 
     render() {
-            const listItems = this.props.mails.map((mail) => {
+        const listItems = this.props.mails.map((mail) => {
 
             let bodyClass = this.getIfClass(
                 "MailList__entry_body",
@@ -45,7 +46,7 @@ class MailList extends Component {
                 "MailList__entry_subject",
                 "MailList__entry_subject_emphasized",
                 !mail.isRead
-             );
+            );
 
 
             let readIcon = mail.isRead ? <MdDrafts/> : <MdMarkunread/>;
@@ -56,8 +57,8 @@ class MailList extends Component {
                     <div className="MailList__entry_info">
 
                         <div className="MailList__entry_tool">
-                            <IconContext.Provider value={{size:16, color:'#d27641'}}>
-                                <div style={{margin:'4px',cursor:'pointer'}}
+                            <IconContext.Provider value={{size: 16, color: '#d27641'}}>
+                                <div style={{margin: '4px', cursor: 'pointer'}}
                                      onClick={() =>
                                          this.props.updateMailAttribute(mail.id, 'starred', !mail.starred)
                                      }>
@@ -67,8 +68,8 @@ class MailList extends Component {
                         </div>
 
                         <div className="MailList__entry_tool">
-                           <IconContext.Provider value={{size:16, color:'#bec2d2'}}>
-                                <div style={{margin:'4px',cursor:'pointer'}}
+                            <IconContext.Provider value={{size: 16, color: '#bec2d2'}}>
+                                <div style={{margin: '4px', cursor: 'pointer'}}
                                      onClick={() =>
                                          this.props.updateMailAttribute(mail.id, 'isRead', !mail.isRead)
                                      }>
@@ -83,6 +84,23 @@ class MailList extends Component {
                         <div className={subjectClass}>
                             {mail.subject}
                         </div>
+
+
+                        <div className="MailList__entry_tool">
+
+                            <NavLink to={"/mail/" + mail.id}>
+                                <ResponsiveIcon
+                                    size={24}
+                                    iconSize = {16}
+                                    style={{margin: '3px'}}
+                                >
+                                    <MdDescription/>
+                                </ResponsiveIcon>
+                            </NavLink>
+
+                        </div>
+
+
                         <div className="MailList__entry_tool">
                             <ResponsiveIcon
                                 size={24}

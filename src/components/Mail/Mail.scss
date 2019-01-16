@@ -1,0 +1,34 @@
+.Mail {
+  padding: 10px;
+
+  &__row {
+    display: flex;
+    margin-bottom:10px;
+  }
+  &__subject,
+  &__from,
+  &__body {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  &__subject {
+    font-weight: bold;
+  }
+  &__from {
+    font-style: italic;
+  }
+  &__body {
+line-height:1.5em;
+  }
+  &__label {
+    flex-basis: 60px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding-right: 10px;
+    text-align: right;
+    display: inline-block;
+    width: 60px;
+    color: #a2add7;
+  }
+}
