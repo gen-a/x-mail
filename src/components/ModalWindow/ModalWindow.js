@@ -39,7 +39,7 @@ class ModalWindow extends Component {
                             </div>
                             <div className="ModalWindow__header_close_tool">
                                 <RippleIcon
-                                    size="38"
+                                    size={38}
                                     style={{margin: '3px'}}
                                     onClick={onClose}
                                 >

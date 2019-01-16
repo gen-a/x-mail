@@ -17,19 +17,12 @@ class MailList extends Component {
         } else {
             opened.push(mail.id);
             if (!mail.status) {
-                this.props.changeMailStatus(mail.id);
+                this.props.updateMailAttribute(mail.id, 'isRead', true);
             }
-
         }
         this.setState({
             opened: opened
         });
-    };
-    toggleStar = (mail) => {
-        this.props.toggleMailStar(mail.id, !mail.starred);
-    };
-    toggleStatus = (mail) => {
-        this.props.toggleMailStatus(mail.id, !mail.status);
     };
 
     getIfClass = (baseClass, additionalClass, condition) =>{
@@ -40,7 +33,7 @@ class MailList extends Component {
     };
 
     render() {
-        const listItems = this.props.mails.map((mail) => {
+            const listItems = this.props.mails.map((mail) => {
 
             let bodyClass = this.getIfClass(
                 "MailList__entry_body",
@@ -51,11 +44,11 @@ class MailList extends Component {
             let subjectClass = this.getIfClass(
                 "MailList__entry_subject",
                 "MailList__entry_subject_emphasized",
-                !mail.status
+                !mail.isRead
              );
 
 
-            let readIcon = mail.status ? <MdDrafts/> : <MdMarkunread/>;
+            let readIcon = mail.isRead ? <MdDrafts/> : <MdMarkunread/>;
             let starIcon = mail.starred ? <MdStar/> : <MdStarBorder/>;
 
             return (
@@ -65,7 +58,9 @@ class MailList extends Component {
                         <div className="MailList__entry_tool">
                             <IconContext.Provider value={{size:16, color:'#d27641'}}>
                                 <div style={{margin:'4px',cursor:'pointer'}}
-                                     onClick={() => this.toggleStar(mail)}>
+                                     onClick={() =>
+                                         this.props.updateMailAttribute(mail.id, 'starred', !mail.starred)
+                                     }>
                                     {starIcon}
                                 </div>
                             </IconContext.Provider>
@@ -74,7 +69,9 @@ class MailList extends Component {
                         <div className="MailList__entry_tool">
                            <IconContext.Provider value={{size:16, color:'#bec2d2'}}>
                                 <div style={{margin:'4px',cursor:'pointer'}}
-                                     onClick={() => this.toggleStatus(mail)}>
+                                     onClick={() =>
+                                         this.props.updateMailAttribute(mail.id, 'isRead', !mail.isRead)
+                                     }>
                                     {readIcon}
                                 </div>
                             </IconContext.Provider>
@@ -88,13 +85,11 @@ class MailList extends Component {
                         </div>
                         <div className="MailList__entry_tool">
                             <ResponsiveIcon
-                                size="24"
+                                size={24}
                                 style={{margin: '3px'}}
                                 onClick={() => this.toggleMail(mail)}
                             >
-
                                 <MdExpandMore/>
-
                             </ResponsiveIcon>
                         </div>
                     </div>

@@ -1,27 +1,3 @@
-.App {
-
-  &__body_container {
-    display: flex;
-
-  }
-  &__left_sidebar {
-
-    flex-basis: 40px;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    padding:1em 0;
-    transition: flex-basis 0.2s;
-
-    &_is_active{
-      flex-basis: 200px;
-    }
-  }
-  &__main_content {
-    flex-grow: 1;
-    padding:1em 6px;
-  }
-
-}
 
 .hidden {
   display: none;

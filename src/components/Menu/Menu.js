@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-
 import RippleIcon from "../RippleIcon/RippleIcon";
 
 import {MdAdd} from 'react-icons/md';
@@ -9,40 +8,40 @@ import MenuEntry from "./MenuEntry/MenuEntry";
 import "./Menu.scss";
 
 class Menu extends Component {
+    // Set default props
+    static defaultProps = {
+        listLengths: {inbox: 0, outbox: 0},
+        activeList: 'inbox',
+        isExpanded: false
+    };
+
     state = {
         folders: [
             {
                 status: true,
                 name: "Inbox",
-                id: "inbox",
-                number:33
+                id: "inbox"
             },
-
             {
                 status: true,
                 name: "Outbox",
-                id: "outbox",
-                number:33
+                id: "outbox"
             }
         ]
     };
 
-    changeActiveList = (id) => {
-        this.props.changeActiveList(id);
-    };
-    openNewMessageWindow = () =>{
-        this.props.openNewMessageWindow();
-    };
 
     render() {
+        let {listLengths, activeList, isExpanded, changeActiveList, openNewMessageWindow} = this.props;
+
         let renderFolders = this.state.folders.map((folder) => {
             return (
                 <li className="Menu__entries_list_entry" key={folder.id}>
                     <MenuEntry
-                        entry = {folder}
-                        isActive = {folder.id === this.props.active}
-                        number = { this.props.mailList[folder.id].length}
-                        changeActiveList = {this.changeActiveList}
+                        entry={folder}
+                        isActive={folder.id === activeList}
+                        number={listLengths[folder.id]}
+                        changeActiveList={changeActiveList}
                     />
                 </li>
             );
@@ -50,7 +49,7 @@ class Menu extends Component {
 
         let getClassName = () => {
             let className = "Menu__entries_list";
-            if(this.props.isActive){
+            if (isExpanded) {
                 className += " Menu__entries_list_is_active";
             }
             return className;
@@ -59,9 +58,9 @@ class Menu extends Component {
         return (<Fragment>
 
             <RippleIcon
-                size="38"
+                size={38}
                 style={{margin: '3px'}}
-                onClick={() => this.openNewMessageWindow()}
+                onClick={openNewMessageWindow}
             >
                 <MdAdd/>
             </RippleIcon>

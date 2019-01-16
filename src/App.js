@@ -1,41 +1,36 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
+import {Route, Switch} from 'react-router-dom';
 
-import Header from "./components/Header/Header";
-import MailList from "./components/MailList/MailList";
-import ModalWindow from "./components/ModalWindow/ModalWindow";
-import NewMailForm from "./components/NewMailForm/NewMailForm";
-
-import './App.scss';
-import Menu from "./components/Menu/Menu";
-
+import DashboardPage from "./components/DashboardPage/DashboardPage";
+import ContactsPage from "./components/ContactsPage/ContactsPage";
 
 class App extends Component {
     state = {
-        newMessageWindowIsOpen:false,
-        leftSideBarIsActive:true,
+        isOpenNewMessageWindow: false,
+        isActiveLeftSideBar: true,
         activeList: "inbox",
         mailList: {
             inbox: [
                 {
                     id: 0,
-                    status: true,
-                    starred:false,
+                    isRead: true,
+                    starred: false,
                     from: "example@email",
                     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
                     subject: "Mail Subject"
                 },
                 {
                     id: 1,
-                    status: false,
-                    starred:false,
+                    isRead: false,
+                    starred: false,
                     from: "example@email",
                     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
                     subject: "Mail Subject"
                 },
                 {
                     id: 2,
-                    status: false,
-                    starred:false,
+                    isRead: false,
+                    starred: false,
                     from: "example@email",
                     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
                     subject: "Mail Subject"
@@ -44,16 +39,16 @@ class App extends Component {
             outbox: [
                 {
                     id: 3,
-                    status: false,
-                    starred:false,
+                    isRead: false,
+                    starred: false,
                     from: "example@email",
                     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
                     subject: "Mail Subject"
                 },
                 {
                     id: 4,
-                    status: false,
-                    starred:false,
+                    isRead: false,
+                    starred: false,
                     from: "example@email",
                     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
                     subject: "Mail Subject"
@@ -62,21 +57,73 @@ class App extends Component {
         }
     };
 
-    setMenuActiveStatus = (isActive) =>{
+    toggleLeftSideBar = () => {
         this.setState({
-            leftSideBarIsActive: isActive
+            isActiveLeftSideBar: !this.state.isActiveLeftSideBar
         });
     };
 
-    changeActiveList = (id) => {
+    changeActiveList(id) {
         this.setState({
             activeList: id
         });
+    }
+
+    saveNewMessage(data) {
+
+        data.id = this.state.mailList.inbox.length + this.state.mailList.outbox.length;
+        data.starred = false;
+        data.status = true;
+        let outboxMailList = this.state.mailList.outbox.slice();
+
+        outboxMailList.unshift(data);
+
+        let mailList = {...this.state.mailList};
+        mailList.outbox = outboxMailList;
+
+        this.setState({
+            mailList: mailList,
+            newMessageWindowIsOpen: false,
+        });
+
     };
 
-    setMailAttribute = (id, attributeName, value) => {
-        let mails = this.state.mailList[this.state.activeList].slice();
+    getMailData = (id) => {
+        for (let member of this.state.mailList) {
+            for (let mail of member) {
+                if (mail.id === this.props.match.params.id) {
+                    return mail;
+                }
+            }
+        }
+    };
 
+    getListLengths = () => {
+        let mailQuantities = {};
+        for (let p in this.state.mailList) {
+            if(this.state.mailList.hasOwnProperty(p)){
+                mailQuantities[p] = this.state.mailList[p].length;
+            }
+        }
+        return mailQuantities;
+    };
+
+    closeNewMessageWindow() {
+        this.setState({
+            isOpenNewMessageWindow: false
+        })
+    };
+
+    openNewMessageWindow() {
+        this.setState({
+            isOpenNewMessageWindow: true
+        })
+    };
+
+
+    updateMailAttribute = (id, attributeName, value) => {
+        let {mailList, activeList} = this.state;
+        let mails = mailList[activeList].slice();
         let updatedMails = mails.map((item) => {
             let newItem = {...item};
             if (newItem.id === id) {
@@ -85,108 +132,42 @@ class App extends Component {
             return newItem;
         });
 
-        this.setState({mailList:{
-            ...this.state.mailList,
-            [this.state.activeList]:updatedMails
-        }});
-
-    };
-
-    changeMailStatusTo= (id, value) =>{
-        this.setMailAttribute(id, 'status', value);
-    };
-
-    changeMailStarred= (id, value) =>{
-        this.setMailAttribute(id, 'starred', value);
-    };
-
-    changeMailStatus = (id) => {
-        this.setMailAttribute(id, 'status', true)
-    };
-
-    saveNewMessage(data){
-
-        data.id = this.state.mailList.inbox.length+this.state.mailList.outbox.length;
-        data.starred = false;
-        data.status = true;
-        let outboxMailList = this.state.mailList.outbox.slice();
-
-        outboxMailList.unshift(data);
-
-        let mailList = { ...this.state.mailList };
-        mailList.outbox = outboxMailList;
-
         this.setState({
-            mailList:mailList,
-            newMessageWindowIsOpen:false,
+            mailList: {
+                ...mailList,
+                [activeList]: updatedMails
+            }
         });
-
-    };
-    closeNewMessageWindow(){
-        this.setState({
-            newMessageWindowIsOpen:false
-        })
-    };
-    openNewMessageWindow(){
-        this.setState({
-            newMessageWindowIsOpen:true
-        })
     };
 
 
     render() {
-        const {activeList, leftSideBarIsActive, mailList, newMessageWindowIsOpen}= this.state;
 
-        let getLeftSidebarClassName = () =>{
-            let className ="App__left_sidebar";
-            if(leftSideBarIsActive){
-                className += " App__left_sidebar_is_active";
-            }
-            return className;
+        const common = {
+            data:this.state,
+            changeActiveList:(id) => this.changeActiveList(id),
+            closeNewMessageWindow:() => this.closeNewMessageWindow(),
+            openNewMessageWindow:() => this.openNewMessageWindow(),
+            saveNewMessage:(mail) => this.saveNewMessage(mail),
+            toggleLeftSideBar:(value) => this.toggleLeftSideBar(value),
+            listLengths:this.getListLengths()
         };
 
-        return <Fragment>
-            <div className="App">
-
-                <Header
-                    menuToggleStatus = { leftSideBarIsActive }
-                    setMenuActiveStatus = { (isActive) => this.setMenuActiveStatus(isActive) }
+        return (
+            <Switch>
+                <Route path="/contacts"
+                       render={(props) => <ContactsPage  {...props} {...common} />}
                 />
+                <Route path="/:list(outbox|inbox)"
+                       render={(props) => <DashboardPage  {...props} {...common} updateMailAttribute={(id, name, value) => this.updateMailAttribute(id, name, value)} />}
+                />
+                <Route exact
+                       path="/"
+                       render={(props) => <DashboardPage  {...props} {...common} updateMailAttribute={(id, name, value) => this.updateMailAttribute(id, name, value)} />}
+                />
+            </Switch>
+        );
 
-                <div className="App__body_container">
-
-                    <div className={getLeftSidebarClassName()}>
-                    <Menu
-                        isActive = {leftSideBarIsActive}
-
-
-                        openNewMessageWindow={this.openNewMessageWindow.bind(this)}
-                        mailList={mailList}
-                        active={activeList}
-                        changeActiveList={this.changeActiveList.bind(this)}
-                    />
-                    </div>
-                    <div className="App__main_content">
-                    <MailList mails={mailList[activeList]}
-                              changeMailStatus={this.changeMailStatus.bind(this)}
-                              toggleMailStar = {(id, value)=> this.changeMailStarred(id, value)}
-                              toggleMailStatus = {(id, value)=> this.changeMailStatusTo(id, value)}
-                    />
-                    </div>
-                </div>
-
-            </div>
-
-            <ModalWindow
-                title="Create new mail"
-                onClose={()=>this.closeNewMessageWindow()}
-                isOpen = {newMessageWindowIsOpen}
-            >
-                <NewMailForm
-                    isActive = {newMessageWindowIsOpen}
-                    onSave = {this.saveNewMessage.bind(this)} />
-            </ModalWindow>
-        </Fragment>;
     }
 }
 

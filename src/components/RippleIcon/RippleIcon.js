@@ -1,24 +1,33 @@
 import React, {Component} from 'react';
 import {IconContext} from "react-icons";
+import PropTypes from "prop-types";
 
 import './RippleIcon.scss';
 
-
 class ResponsiveIcon extends Component {
-    state = {
-        isActive: false
-    };
     // Set default props
     static defaultProps = {
         backgroundColor: "#e0e5f8",
         size: 32,
         iconSize:24,
-        iconColor:'#616ea1'
+        iconColor:'#616ea1',
+        onClick:function(){}
+    };
+    static propTypes = {
+        backgroundColor: PropTypes.string,
+        size: PropTypes.number,
+        iconSize: PropTypes.number,
+        iconColor: PropTypes.string,
+        onClick: PropTypes.func
+    };
+    state = {
+        isActive: false
     };
 
     onMouseOver = () => {
         this.setState({isActive: true});
     };
+
     onMouseOut = () => {
         this.setState({isActive: false, isClicked:false});
     };
@@ -29,12 +38,6 @@ class ResponsiveIcon extends Component {
         }
         return baseClass;
     };
-
-    onClick= () => {
-        this.props.onClick();
-    };
-
-
 
     getBackgroundStyle = () => {
         const {backgroundColor, size} = this.props;
@@ -76,7 +79,7 @@ class ResponsiveIcon extends Component {
             }
                  onMouseOver={() => this.onMouseOver()}
                  onMouseOut={() => this.onMouseOut()}
-                 onClick={() => this.onClick()}
+                 onClick={onClick}
                  style={containerStyle}
             >
                 <IconContext.Provider value={iconContextProviderValue}>

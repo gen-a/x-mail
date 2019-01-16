@@ -1,50 +1,46 @@
 import React, {Component, Fragment} from 'react';
-import { MdInbox,MdSend } from 'react-icons/md';
-import { IconContext } from "react-icons";
+import {MdInbox, MdSend} from 'react-icons/md';
+import {IconContext} from "react-icons";
 import './MenuEntry.scss';
-
-
-
-
+import {NavLink} from "react-router-dom";
 
 
 class MenuEntry extends Component {
 
-    changeActiveList = (id) => {
-        this.props.changeActiveList(id);
-    };
-
-    getEntryIcon(id){
-        switch(id){
+    getEntryIcon(id) {
+        switch (id) {
             case 'inbox':
                 return <MdInbox/>;
             case 'outbox':
-                return <MdSend/>   ;
+                return <MdSend/>;
             default:
-                 return <MdInbox/>;
+                return <MdInbox/>;
         }
     };
 
-
     render() {
-        let className = this.props.isActive ? "MenuEntry MenuEntry_is_active" : "MenuEntry";
+        let {isActive, entry, number, changeActiveList} = this.props;
+        let className = isActive ? "MenuEntry MenuEntry_is_active" : "MenuEntry";
+
+        let iconStyle = isActive ? {color:'red'}:{};
+
         return (
             <Fragment>
-                <div className={className}>
-                    <div onClick={() => this.changeActiveList(this.props.entry.id)}>
-                        <IconContext.Provider value={{ className: "MenuEntry__icon" }}>
-                        <div className="MenuEntry__icon_container">
-                            {this.getEntryIcon(this.props.entry.id)}
-                        </div>
-                    </IconContext.Provider>
+                <NavLink to={"/"+entry.id} className={className}>
+
+                        <IconContext.Provider value={{className: "MenuEntry__icon", ...iconStyle}}>
+                            <div className="MenuEntry__icon_container">
+                                {this.getEntryIcon(entry.id)}
+                            </div>
+                        </IconContext.Provider>
                         <div className="MenuEntry__name">
-                            {this.props.entry.name}
+                            {entry.name}
                         </div>
                         <div className="MenuEntry__number">
-                            {this.props.number}
+                            {number}
                         </div>
-                    </div>
-                </div>
+
+                </NavLink>
             </Fragment>
         );
     }
