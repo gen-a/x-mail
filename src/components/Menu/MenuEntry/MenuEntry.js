@@ -19,14 +19,14 @@ class MenuEntry extends Component {
     };
 
     render() {
-        let {isActive, entry, number, changeActiveList} = this.props;
-        let className = isActive ? "MenuEntry MenuEntry_is_active" : "MenuEntry";
+        let {isActive, entry, number} = this.props;
 
+        let className = isActive ? "MenuEntry MenuEntry_is_active" : "MenuEntry";
         let iconStyle = isActive ? {color:'red'}:{};
 
         return (
             <Fragment>
-                <NavLink to={"/"+entry.id} className={className}>
+                <NavLink to={"/mails/"+entry.id} className={className}>
 
                         <IconContext.Provider value={{className: "MenuEntry__icon", ...iconStyle}}>
                             <div className="MenuEntry__icon_container">
@@ -37,7 +37,7 @@ class MenuEntry extends Component {
                             {entry.name}
                         </div>
                         <div className="MenuEntry__number">
-                            {number}
+                            {number === 0|| number}
                         </div>
 
                 </NavLink>

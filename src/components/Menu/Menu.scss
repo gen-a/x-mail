@@ -1,20 +1,20 @@
 .Menu {
-
-  &__entries_list {
-
+  &__entries {
     list-style: none;
     margin: 0;
     padding: 0;
 
     & .MenuEntry {
+      border-radius: 0 16px 16px 0;
+      margin-left: 0;
+      width: 200px;
 
-      border-radius: 16px;
       transition: 0.2s all;
-      margin-left: 6px;
-      width: 32px;
+
       overflow: hidden;
+
       &__icon_container {
-        left: 0;
+        left: 6px;
         transition: 0.2s all;
         box-sizing: border-box;
         height: 32px;
@@ -37,29 +37,33 @@
       width: 32px;
       height: 32px;
       text-align: center;
-      display: none;
+      display: block;
+      font-weight: bold;
     }
     & .MenuEntry__name {
       margin-left: 38px;
       transition: 0.2s all;
     }
-  }
-  &__entries_list_is_active {
 
-    & .MenuEntry {
-      border-radius: 0 16px 16px 0;
-      margin-left: 0;
-      width: 200px;
-      &__icon_container {
-        left: 6px;
+    &_is_collapsed {
 
+      & .MenuEntry {
+
+        border-radius: 16px;
+        margin-left: 6px;
+        width: 32px;
+
+        &__icon_container {
+          left: 0;
+        }
       }
-    }
-    & .MenuEntry__number {
-      display: block;
-    }
-    & .MenuEntry__name {
-      margin-left: 44px;
+      & .MenuEntry__number {
+        display: none;
+      }
+      & .MenuEntry__name {
+        margin-left: 44px;
+      }
     }
   }
 }
+

@@ -1,0 +1,46 @@
+{
+  "inbox": [
+    {
+      "id": "0",
+      "isRead": true,
+      "starred": false,
+      "from": "example@email",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+      "subject": "Mail Subject"
+    },
+    {
+      "id": "1",
+      "isRead": false,
+      "starred": false,
+      "from": "example@email",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+      "subject": "Mail Subject"
+    },
+    {
+      "id": "2",
+      "isRead": false,
+      "starred": false,
+      "from": "example@email",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+      "subject": "Mail Subject"
+    }
+  ],
+  "outbox": [
+    {
+      "id": "3",
+      "isRead": false,
+      "starred": false,
+      "from": "example@email",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+      "subject": "Mail Subject"
+    },
+    {
+      "id": "4",
+      "isRead": false,
+      "starred": false,
+      "from": "example@email",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit diam sodales sapien elementum aliquet. Cras non aliquet sem. Duis leo dui, dictum scelerisque molestie ut, semper sit amet sem. Ut nec metus et ex ornare fermentum eu eu dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+      "subject": "Mail Subject"
+    }
+  ]
+}

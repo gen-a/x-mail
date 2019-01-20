@@ -1,0 +1,35 @@
+.ContactList {
+  &__entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    & .ContactList__entry:last-child {
+      border-bottom: 1px solid #a2add7;
+    }
+  }
+  &__entry {
+    border-top: 1px solid #a2add7;
+    padding: 5px;
+
+    &_info {
+      display: flex;
+      font-size:0.875em;
+      line-height:24px;
+    }
+    &_email {
+      flex-basis: 200px;
+      flex-grow: 0;
+      flex-shrink: 1;
+    }
+    &_name {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+      &_toool {
+      flex-basis: 32px;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+
+  }
+}

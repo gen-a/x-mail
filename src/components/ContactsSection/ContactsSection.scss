@@ -1,18 +1,18 @@
-.Layout {
+.ContactsSection {
 
   &__body_container {
     display: flex;
   }
 
   &__left_sidebar {
-    flex-basis: 40px;
+    flex-basis: 200px;
     flex-shrink: 0;
     box-sizing: border-box;
     padding:1em 0;
     transition: flex-basis 0.2s;
 
-    &_is_active{
-      flex-basis: 200px;
+    &_is_collapsed{
+      flex-basis: 40px;
     }
   }
 
