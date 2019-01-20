@@ -1,29 +1,39 @@
 import React, {Component, Fragment} from 'react';
 import ResponsiveIcon from "../RippleIcon/RippleIcon";
-import {MdDescription, MdExpandMore, MdMarkunread, MdDrafts, MdStarBorder, MdStar} from 'react-icons/md';
+import {MdDelete, MdDescription, MdExpandMore, MdMarkunread, MdDrafts, MdStarBorder, MdStar} from 'react-icons/md';
 import {IconContext} from "react-icons";
+import {NavLink} from "react-router-dom";
+import {connect} from 'react-redux';
+import {DEL_MAIL, UPD_MAIL_ATTRIBUTE, TOGGLE_OPEN_MAIL} from "../../actions/mails";
 
 import './MailList.scss';
-import {NavLink} from "react-router-dom";
+
+const mapStateToProps = (state) => {
+    return {
+        mails: state.mails.mailList,
+        opened: state.mails.opened
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        delMail: (id) => {
+            dispatch({type: DEL_MAIL, payload: {id: id}});
+        },
+        updMailAttribute: (id, name, value) => {
+            dispatch({type: UPD_MAIL_ATTRIBUTE, payload: {id: id, name: name, value: value}});
+        },
+        toggleOpenMail: (id) => {
+            dispatch({type: TOGGLE_OPEN_MAIL, payload: {id: id}});
+        }
+    }
+};
 
 class MailList extends Component {
-    state = {
-        opened: []
-    };
 
-    toggleMail = (mail) => {
-        let opened = this.state.opened.slice();
-        if (opened.includes(mail.id)) {
-            opened.splice(opened.indexOf(mail.id), 1);
-        } else {
-            opened.push(mail.id);
-            if (!mail.status) {
-                this.props.updateMailAttribute(mail.id, 'isRead', true);
-            }
-        }
-        this.setState({
-            opened: opened
-        });
+    toggleMail = (id) => {
+        this.props.toggleOpenMail(id);
+        this.props.updMailAttribute(id, 'isRead', true);
     };
 
     getIfClass = (baseClass, additionalClass, condition) => {
@@ -34,12 +44,15 @@ class MailList extends Component {
     };
 
     render() {
-        const listItems = this.props.mails.map((mail) => {
+
+        const {mails, activeList, opened} = this.props;
+
+        const listItems = mails[activeList].map((mail) => {
 
             let bodyClass = this.getIfClass(
                 "MailList__entry_body",
                 "MailList__entry_body_is_open",
-                this.state.opened.indexOf(mail.id) !== -1
+                opened.indexOf(mail.id) !== -1
             );
 
             let subjectClass = this.getIfClass(
@@ -47,7 +60,6 @@ class MailList extends Component {
                 "MailList__entry_subject_emphasized",
                 !mail.isRead
             );
-
 
             let readIcon = mail.isRead ? <MdDrafts/> : <MdMarkunread/>;
             let starIcon = mail.starred ? <MdStar/> : <MdStarBorder/>;
@@ -60,7 +72,7 @@ class MailList extends Component {
                             <IconContext.Provider value={{size: 16, color: '#d27641'}}>
                                 <div style={{margin: '4px', cursor: 'pointer'}}
                                      onClick={() =>
-                                         this.props.updateMailAttribute(mail.id, 'starred', !mail.starred)
+                                         this.props.updMailAttribute(mail.id, 'starred', !mail.starred)
                                      }>
                                     {starIcon}
                                 </div>
@@ -71,7 +83,7 @@ class MailList extends Component {
                             <IconContext.Provider value={{size: 16, color: '#bec2d2'}}>
                                 <div style={{margin: '4px', cursor: 'pointer'}}
                                      onClick={() =>
-                                         this.props.updateMailAttribute(mail.id, 'isRead', !mail.isRead)
+                                         this.props.updMailAttribute(mail.id, 'isRead', !mail.isRead)
                                      }>
                                     {readIcon}
                                 </div>
@@ -85,13 +97,12 @@ class MailList extends Component {
                             {mail.subject}
                         </div>
 
-
                         <div className="MailList__entry_tool">
 
-                            <NavLink to={"/mail/" + mail.id}>
+                            <NavLink to={"/mails/" + activeList + "/" + mail.id}>
                                 <ResponsiveIcon
                                     size={24}
-                                    iconSize = {16}
+                                    iconSize={16}
                                     style={{margin: '3px'}}
                                 >
                                     <MdDescription/>
@@ -99,13 +110,20 @@ class MailList extends Component {
                             </NavLink>
 
                         </div>
-
-
                         <div className="MailList__entry_tool">
                             <ResponsiveIcon
                                 size={24}
                                 style={{margin: '3px'}}
-                                onClick={() => this.toggleMail(mail)}
+                                onClick={() => this.props.delMail(mail.id)}
+                            >
+                                <MdDelete/>
+                            </ResponsiveIcon>
+                        </div>
+                        <div className="MailList__entry_tool">
+                            <ResponsiveIcon
+                                size={24}
+                                style={{margin: '3px'}}
+                                onClick={() => this.toggleMail(mail.id)}
                             >
                                 <MdExpandMore/>
                             </ResponsiveIcon>
@@ -127,4 +145,4 @@ class MailList extends Component {
 
 }
 
-export default MailList;
+export default connect(mapStateToProps, mapDispatchToProps)(MailList);

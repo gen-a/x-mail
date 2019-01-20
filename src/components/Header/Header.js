@@ -1,23 +1,40 @@
 import React, {Component} from 'react';
-
 import Search from "./Search/Search";
 import ResponsiveIcon from "../RippleIcon/RippleIcon";
 import {NavLink} from 'react-router-dom';
 import {MdMenu, MdDashboard, MdContacts} from 'react-icons/md';
-import PropTypes from "prop-types";
-
+import {connect} from 'react-redux';
+import {EXPAND_LEFT_SIDEBAR, COLLAPSE_LEFT_SIDEBAR} from "../../actions/layout";
 
 import './Header.scss';
 
+const mapStateToProps = (state) => {
+    return {
+        isCollapsedLeftSideBar: state.layout.isCollapsedLeftSideBar
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        expandLeftSidebar: () => {
+            dispatch({type: EXPAND_LEFT_SIDEBAR});
+        },
+        collapseLeftSidebar: () => {
+            dispatch({type: COLLAPSE_LEFT_SIDEBAR});
+        }
+    }
+};
+
+
 class Header extends Component {
 
-    static defaultProps = {};
-
-    static propTypes = {
-        toggleLeftSideBar: PropTypes.func.isRequired
+    toggleLefSideBar = () =>{
+        if(this.props.isCollapsedLeftSideBar){
+            this.props.expandLeftSidebar();
+        }else{
+            this.props.collapseLeftSidebar();
+        }
     };
-
-    state = {};
 
     render() {
         return (
@@ -26,7 +43,7 @@ class Header extends Component {
                     <ResponsiveIcon
                         size={38}
                         style={{margin: '3px'}}
-                        onClick={this.props.toggleLeftSideBar}
+                        onClick={() => this.toggleLefSideBar()}
                     >
                         <MdMenu/>
                     </ResponsiveIcon>
@@ -43,7 +60,7 @@ class Header extends Component {
                 </div>
 
                 <div className="Header__tools">
-                    <NavLink to="/">
+                    <NavLink to="/mails">
                         <ResponsiveIcon size={38} style={{margin: '3px', padding: '7px'}}>
                             <MdDashboard/>
                         </ResponsiveIcon>
@@ -63,4 +80,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

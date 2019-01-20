@@ -1,6 +1,30 @@
 import React, {Component, Fragment} from 'react';
+import {connect} from 'react-redux';
+import {SEND_MAIL} from "../../actions/mails";
+import {CLOSE_NEW_MAIL_WINDOW} from "../../actions/layout";
+import uuidv4 from 'uuid/v4';
+
+
+
 
 import './NewMailForm.scss';
+
+const mapStateToProps = (state) => {
+    return {}
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        sendMail: (data) => {
+            dispatch({type: SEND_MAIL, payload: data});
+        },
+        closeNewMailWindow: () => {
+            dispatch({type: CLOSE_NEW_MAIL_WINDOW});
+        }
+    }
+};
+
+
 
 class NewMailForm extends Component {
     state = {
@@ -19,13 +43,6 @@ class NewMailForm extends Component {
     componentWillUnmount(){
         document.removeEventListener("keydown", (e) => this.onPressEnter(e), false);
     }
-    save() {
-        this.props.onSave({...this.state});
-        this.setState({
-            subject: "",
-            body: ""
-        });
-    };
 
     onChangeSubject(e) {
         this.setState({
@@ -38,6 +55,21 @@ class NewMailForm extends Component {
             body: e.target.value
         })
     };
+
+    submit(){
+
+        this.props.sendMail({
+            ...this.state,
+            id:uuidv4()
+        });
+
+        this.setState({
+            subject: '',
+            body: ''
+        });
+
+        this.props.closeNewMailWindow()
+    }
 
     render() {
 
@@ -67,7 +99,7 @@ class NewMailForm extends Component {
 
                 <button className="NewMailForm__button"
                         onClick={() => {
-                            this.save()
+                            this.submit()
                         }}
 
                 >Save
@@ -76,5 +108,4 @@ class NewMailForm extends Component {
         );
     }
 }
-
-export default NewMailForm;
+export default connect(mapStateToProps, mapDispatchToProps)(NewMailForm);
