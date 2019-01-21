@@ -2,29 +2,11 @@ import React, {Component, Fragment} from 'react';
 import {MdStarBorder, MdStar} from 'react-icons/md';
 import {IconContext} from "react-icons";
 import {connect} from 'react-redux';
-import {DEL_MAIL, UPD_MAIL_ATTRIBUTE} from "../../actions/mails";
+import {updMailAttribute} from "../../actions/mails";
 
 import "./Mail.scss";
 
-const mapStateToProps = (state) => {
-    return {
-        mails: state.mails.mailList
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        delMail: (id) => {
-            dispatch({type: DEL_MAIL, payload: {id: id}});
-        },
-        updMailAttribute: (id, name, value) => {
-            dispatch({type: UPD_MAIL_ATTRIBUTE, payload: {id: id, name: name, value: value}});
-        }
-    }
-};
-
 class Mail extends Component {
-
 
     findEmailById = (id) => {
         for (let listName in this.props.mails) {
@@ -37,7 +19,6 @@ class Mail extends Component {
        }
         return {id:id, body:'', starred:false, subject:'', from:''};
     };
-
 
     render() {
         const {id, body, starred, subject, from} = this.findEmailById(this.props.match.params.id);
@@ -59,15 +40,13 @@ class Mail extends Component {
                                     cursor: 'pointer'
                                 }}
                                      onClick={() =>
-                                         this.props.updMailAttribute(id, 'starred', !starred)
+                                         this.props.updMailAttribute(id, 'starred', !starred, this.props.mails)
                                      }>
                                     {starIcon}
                                 </div>
                             </IconContext.Provider>
                         </div>
                     </div>
-
-
                     <div className="Mail__row">
                         <div className="Mail__label">From:</div>
                         {' '}
@@ -84,5 +63,17 @@ class Mail extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        mails: state.mails.mailList
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updMailAttribute: (id, name, value) => dispatch(updMailAttribute(id, name, value)),
+    }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Mail);

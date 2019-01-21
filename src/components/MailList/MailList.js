@@ -4,30 +4,9 @@ import {MdDelete, MdDescription, MdExpandMore, MdMarkunread, MdDrafts, MdStarBor
 import {IconContext} from "react-icons";
 import {NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
-import {DEL_MAIL, UPD_MAIL_ATTRIBUTE, TOGGLE_OPEN_MAIL} from "../../actions/mails";
+import {delMail,updMailAttribute,toggleOpenMail} from "../../actions/mails";
 
 import './MailList.scss';
-
-const mapStateToProps = (state) => {
-    return {
-        mails: state.mails.mailList,
-        opened: state.mails.opened
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        delMail: (id) => {
-            dispatch({type: DEL_MAIL, payload: {id: id}});
-        },
-        updMailAttribute: (id, name, value) => {
-            dispatch({type: UPD_MAIL_ATTRIBUTE, payload: {id: id, name: name, value: value}});
-        },
-        toggleOpenMail: (id) => {
-            dispatch({type: TOGGLE_OPEN_MAIL, payload: {id: id}});
-        }
-    }
-};
 
 class MailList extends Component {
 
@@ -144,5 +123,20 @@ class MailList extends Component {
     }
 
 }
+
+const mapStateToProps = (state) => {
+    return {
+        mails: state.mails.mailList,
+        opened: state.mails.opened
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        delMail: (id) => dispatch(delMail(id)),
+        updMailAttribute: (id, name, value) => dispatch(updMailAttribute(id, name, value)),
+        toggleOpenMail: (id, opened) => dispatch(toggleOpenMail(id, opened))
+    }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MailList);

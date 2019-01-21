@@ -10,23 +10,7 @@ import {Route, Switch} from "react-router-dom";
 import Mail from "../Mail/Mail";
 
 import "./MailsSection.scss";
-
-const mapStateToProps = (state) => {
-    return {
-        isCollapsedLeftSideBar: state.layout.isCollapsedLeftSideBar
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchMails: () => {
-            dispatch({
-                type: 'FETCH_MAILS',
-                payload: axios.get("http://localhost:3000/assets/mails.json")
-            })
-        }
-    }
-};
+import Loader from "../Loader/Loader";
 
 class MailsSection extends Component {
     componentDidMount() {
@@ -66,6 +50,7 @@ class MailsSection extends Component {
                                        render={(props) => <MailList {...props} activeList={activeList}/>} />
                             </Switch>
                             <NewMailModalWindow />
+                            <Loader />
                         </div>
                     </div>
                 </div>
@@ -73,5 +58,22 @@ class MailsSection extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        isCollapsedLeftSideBar: state.layout.isCollapsedLeftSideBar
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchMails: () => {
+            dispatch({
+                type: 'FETCH_MAILS',
+                payload: axios.get("http://localhost:3000/assets/mails.json")
+            })
+        }
+    }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MailsSection);
