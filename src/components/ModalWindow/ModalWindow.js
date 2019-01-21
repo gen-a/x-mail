@@ -23,10 +23,7 @@ class ModalWindow extends Component {
         const {isOpen, children, title, onClose} = this.props;
         let className = "ModalWindow";
         if (isOpen) {
-            className = "ModalWindow";
-            if (isOpen) {
-                className += " ModalWindow_is_active";
-            }
+            className += " ModalWindow_is_active";
         }
         return (
             <Fragment>

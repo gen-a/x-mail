@@ -1,8 +1,20 @@
-import {FETCH_MAILS_FULFILLED, FETCH_MAILS_REJECTED, FETCH_MAILS_PENDING, DEL_MAIL, UPD_MAIL_ATTRIBUTE, TOGGLE_OPEN_MAIL, SEND_MAIL} from '../actions/mails';
+import {
+    DEL_MAIL_FULFILLED,
+    DEL_MAIL_REJECTED,
+    DEL_MAIL_PENDING,
+    FETCH_MAILS_FULFILLED,
+    FETCH_MAILS_REJECTED,
+    FETCH_MAILS_PENDING,
+    UPD_MAIL_ATTRIBUTE_PENDING,
+    UPD_MAIL_ATTRIBUTE_FULFILLED,
+    UPD_MAIL_ATTRIBUTE_REJECTED,
+    TOGGLE_OPEN_MAIL,
+    SEND_MAIL
+} from '../actions/mails';
 
 
 const initialState = {
-    fetching:false,
+    isFetching:false,
     error:'',
     opened: [],
     mailFolders: [
@@ -17,24 +29,58 @@ const initialState = {
 };
 
 function mails(state = initialState, action) {
-    let newMailList;
 
     switch (action.type) {
+        case UPD_MAIL_ATTRIBUTE_PENDING:
+            return {
+                ...state,
+                isFetching:true
+            };
+        case UPD_MAIL_ATTRIBUTE_FULFILLED:
+            return {
+                ...state,
+                isFetching:false,
+                mailList:action.payload.mailList
+            };
+        case UPD_MAIL_ATTRIBUTE_REJECTED:
+            return {
+                ...state,
+                isFetching:false,
+                error:action.payload
+            };
+        case DEL_MAIL_PENDING:
+            return {
+                ...state,
+                isFetching:true
+            };
+        case DEL_MAIL_FULFILLED:
+            return {
+                ...state,
+                isFetching:false,
+                mailList:action.payload.mailList
+            };
+        case DEL_MAIL_REJECTED:
+            return {
+                ...state,
+                isFetching:false,
+                error:action.payload
+            };
+
         case FETCH_MAILS_PENDING:
             return {
                 ...state,
-                fetching:true
+                isFetching:true
             };
         case FETCH_MAILS_FULFILLED:
             return {
                 ...state,
-                fetching:true,
+                isFetching:false,
                 mailList:action.payload.data
             };
         case FETCH_MAILS_REJECTED:
             return {
                 ...state,
-                fetching:true,
+                isFetching:false,
                 error:action.payload
             };
 
@@ -49,52 +95,10 @@ function mails(state = initialState, action) {
                 }
             };
 
-        case DEL_MAIL:
-            newMailList = {...state.mailList};
-            for (let listName in newMailList) {
-                if (newMailList.hasOwnProperty(listName)) {
-                    newMailList[listName] = newMailList[listName].filter(
-                        (object) => object.id !== action.payload.id
-                    );
-                }
-            }
-            return {
-                ...state,
-                mailList: newMailList
-            };
-
-        case UPD_MAIL_ATTRIBUTE:
-            newMailList = {...state.mailList};
-            for (let listName in newMailList) {
-                if (newMailList.hasOwnProperty(listName)) {
-                    newMailList[listName] = newMailList[listName].map(
-                        (object) => {
-                            let newItem = {...object};
-                            if (newItem.id === action.payload.id) {
-                                newItem[action.payload.name] = action.payload.value;
-                            }
-                            return newItem;
-                        }
-                    );
-                }
-            }
-            return {
-                ...state,
-                mailList: newMailList
-            };
-
         case TOGGLE_OPEN_MAIL:
-            let opened = state.opened.slice();
-
-            if (opened.includes(action.payload.id)) {
-                opened.splice(opened.indexOf(action.payload.id), 1);
-            } else {
-                opened.push(action.payload.id);
-            }
-
             return {
                 ...state,
-                opened: opened
+                opened: action.payload.opened
             };
 
         default:

@@ -1,23 +1,27 @@
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import rootReducer from './reducers/index';
 //import axios from 'axios';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import promise from 'redux-promise-middleware';
+import promise from 'redux-promise-middleware'
+import {error} from './middlewares/error';
 //import {FETCH_MAILS_FULFILLED, FETCH_MAILS_REJECTED, FETCH_MAILS_PENDING} from './actions/mails';
 
-const error = store => next => action=> {
-    try{
-        next(action);
-    }catch(e){
-        console.error('Error', action);
-    }
-};
-
+const middleware = [promise(), thunk, error, logger];
+/*
 const store = createStore(
     rootReducer,
-    applyMiddleware(promise(), thunk, logger, error)
+    applyMiddleware(promise(), thunk, error, logger)
 );
+*/
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+    rootReducer,
+    composeEnhancers(
+    applyMiddleware(...middleware)
+));
+
 
 /*
 store.dispatch((dispatch)=>{
