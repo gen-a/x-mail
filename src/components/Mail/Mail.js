@@ -56,7 +56,15 @@ class Mail extends Component {
                     <div className="Mail__row">
                         <div className="Mail__label">Body:</div>
                         {' '}
-                        <div className="Mail__body">{body}</div>
+                        <div className="Mail__body">
+                            {body.split('\n').map(function (item, key) {
+                                return (
+                                    <p key={key}>
+                                        {item}
+                                    </p>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
             </Fragment>

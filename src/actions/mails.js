@@ -32,10 +32,10 @@ export function fetchMails() {
             .then((result) => {
                 mailList.outbox = result.data;
                 dispatch(
-                    {type: FETCH_MAILS_FULFILLED, payload: {data:mailList}}
+                    {type: FETCH_MAILS_FULFILLED, payload: {data: mailList}}
                 )
             })
-            .catch(err=>dispatch({type: FETCH_MAILS_REJECTED, payload: err}))
+            .catch(err => dispatch({type: FETCH_MAILS_REJECTED, payload: err}))
     }
 }
 
@@ -56,9 +56,7 @@ export function delMail(id) {
                 }
             }
             dispatch(
-
-            {type:DEL_MAIL_FULFILLED, payload:{mailList: newMailList}}
-
+                {type: DEL_MAIL_FULFILLED, payload: {mailList: newMailList}}
             )
         }, 1000);
     }
@@ -103,7 +101,6 @@ export function toggleOpenMail(id) {
             newOpened.push(id);
         }
         dispatch(
-
             {type: TOGGLE_OPEN_MAIL, payload: {opened: newOpened}}
         );
     }

@@ -4,7 +4,7 @@ import {MdDelete, MdDescription, MdExpandMore, MdMarkunread, MdDrafts, MdStarBor
 import {IconContext} from "react-icons";
 import {NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
-import {delMail,updMailAttribute,toggleOpenMail} from "../../actions/mails";
+import {delMail, updMailAttribute, toggleOpenMail} from "../../actions/mails";
 
 import './MailList.scss';
 
@@ -73,7 +73,7 @@ class MailList extends Component {
                             {mail.from}
                         </div>
                         <div className={subjectClass}>
-                                {mail.subject}
+                            {mail.subject}
                         </div>
                         <div className="MailList__entry_tool">
 
@@ -108,7 +108,13 @@ class MailList extends Component {
                         </div>
                     </div>
                     <div className={bodyClass}>
-                        {mail.body}
+                        {mail.body.split('\n').map(function (item, key) {
+                            return (
+                                <p key={key}>
+                                    {item}
+                                </p>
+                            )
+                        })}
                     </div>
                 </li>
             )
