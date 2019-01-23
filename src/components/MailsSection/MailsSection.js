@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
+import {fetchMails} from "../../actions/mails";
 
 import MailList from "../MailList/MailList";
 import Header from "../Header/Header";
@@ -67,11 +68,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchMails: () => {
+        fetchMails: () => dispatch(fetchMails()),
+        fetchMailsLocal: () => {
             dispatch({
                 type: 'FETCH_MAILS',
                 payload: axios.get("http://localhost:3000/assets/mails.json")
             })
+
         }
     }
 };
