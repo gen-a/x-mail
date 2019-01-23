@@ -73,9 +73,8 @@ class MailList extends Component {
                             {mail.from}
                         </div>
                         <div className={subjectClass}>
-                            {mail.subject}
+                                {mail.subject}
                         </div>
-
                         <div className="MailList__entry_tool">
 
                             <NavLink to={"/mails/" + activeList + "/" + mail.id}>
