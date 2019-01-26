@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import {TransitionGroup, CSSTransition} from "react-transition-group";
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchMails} from "../../actions/mails";
@@ -21,8 +22,9 @@ class MailsSection extends Component {
     render() {
 
         let activeList = this.props.match.params.list || "inbox";
+        let location = this.props.location;
 
-        const { isCollapsedLeftSideBar } = this.props;
+        const {isCollapsedLeftSideBar} = this.props;
 
         let leftSidebarClassName = "MailsSection__left_sidebar";
         if (isCollapsedLeftSideBar) {
@@ -40,18 +42,30 @@ class MailsSection extends Component {
                             <Menu activeList={activeList}/>
                         </div>
                         <div className="MailsSection__main_content">
-                            <Switch>
-                                <Route path="/mails/:list(outbox|inbox)/:id"
-                                       render={(props) => <Mail {...props} activeList={activeList}/>} />
-                                <Route path="/mails/:list(outbox|inbox)"
-                                       render={(props) => <MailList {...props} activeList={activeList}/>} />
-                                <Route path="/mails"
-                                       render={(props) => <MailList {...props} activeList={activeList}/>} />
-                                <Route path="/"
-                                       render={(props) => <MailList {...props} activeList={activeList}/>} />
-                            </Switch>
-                            <NewMailModalWindow />
-                            <Loader />
+                            <TransitionGroup>
+                                {/* no different than other usage of
+                CSSTransition, just make sure to pass
+                `location` to `Switch` so it can match
+                the old location as it animates out
+            */}
+                                <CSSTransition
+                                    key={location.key}
+                                    classNames="fade"
+                                    timeout={300}
+                                >
+                                    <Switch location={location}>
+                                        <Route path="/mails/:list(outbox|inbox)/:id"
+                                               render={(props) => <Mail {...props} activeList={activeList}/>}/>
+                                        <Route path="/mails/:list(outbox|inbox)"
+                                               render={(props) => <MailList {...props} activeList={activeList}/>}/>
+                                        <Route path="/mails"
+                                               render={(props) => <MailList {...props} activeList={activeList}/>}/>
+                                        <Route path="/"
+                                               render={(props) => <MailList {...props} activeList={activeList}/>}/>
+                                    </Switch>
+                                </CSSTransition></TransitionGroup>
+                            <NewMailModalWindow/>
+                            <Loader/>
                         </div>
                     </div>
                 </div>

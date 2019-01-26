@@ -1,5 +1,7 @@
 .MailsSection {
 
+
+
   &__body_container {
     display: flex;
   }
@@ -16,9 +18,21 @@
   }
 
   &__main_content {
+    position:relative;
     flex: 1 1 auto;
     min-width: 0;
     padding:1em 6px;
   }
 
 }
+/* you'll need this CSS somewhere*/
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+

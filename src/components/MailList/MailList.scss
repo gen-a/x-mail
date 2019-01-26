@@ -1,5 +1,7 @@
 .MailList {
   &__entries {
+    position: absolute;
+    width: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -10,15 +12,15 @@
   &__entry {
     border-top: 1px solid #a2add7;
     padding: 5px;
-    position:relative;
+    position: relative;
 
     &_info {
       display: flex;
       overflow: hidden;
       white-space: nowrap;
 
-      font-size:0.875em;
-      line-height:24px;
+      font-size: 0.875em;
+      line-height: 24px;
     }
     &_from {
 
@@ -39,10 +41,8 @@
 
     }
 
-
-
     &_subject.MailList__entry_subject_emphasized {
-      font-weight:bold;
+      font-weight: bold;
     }
     &_tool {
       flex: 0 0 32px;
@@ -50,16 +50,16 @@
 
     &_body {
       display: none;
-      border:1px dotted #a2add7;
-      padding:10px;
-      margin:5px;
+      border: 1px dotted #a2add7;
+      padding: 10px;
+      margin: 5px;
       background: #dfe5f7;
-      border-radius:5px;
-      line-height:1.5em;
+      border-radius: 5px;
+      line-height: 1.5em;
 
-      & p{
-        padding:0;
-        margin:0 0 1em 0;
+      & p {
+        padding: 0;
+        margin: 0 0 1em 0;
       }
     }
     &_body_is_open {

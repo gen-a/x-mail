@@ -13,10 +13,6 @@ class App extends Component {
                 <Route path="/mails" component={MailsSection} />} />
                 <Route path="/contacts" component={ContactsSection} />} />
                 <Route path="/" component={MailsSection} />} />
-
-
-
-
             </Switch>
         );
     }

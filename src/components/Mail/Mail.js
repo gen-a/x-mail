@@ -21,7 +21,7 @@ class Mail extends Component {
     };
 
     render() {
-        const {id, body, starred, subject, from} = this.findEmailById(this.props.match.params.id);
+        const {id, body, starred, subject, from, date} = this.findEmailById(this.props.match.params.id);
         let starIcon = starred ? <MdStar/> : <MdStarBorder/>;
 
         return (
@@ -52,7 +52,11 @@ class Mail extends Component {
                         {' '}
                         <div className="Mail__from">{from}</div>
                     </div>
-
+                    <div className="Mail__row">
+                        <div className="Mail__label">Sent:</div>
+                        {' '}
+                        <div className="Mail__date">{date}</div>
+                    </div>
                     <div className="Mail__row">
                         <div className="Mail__label">Body:</div>
                         {' '}
