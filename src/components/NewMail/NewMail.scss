@@ -1,0 +1,48 @@
+.NewMail{
+  &__field{
+    display: flex;
+    margin-bottom:10px;
+  }
+  &__label{
+    flex-basis: 100px;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+  &__input_text{
+    flex-grow: 1;
+  }
+  &__textarea{
+    flex-grow: 1;
+  }
+  &__input_text,
+  &__textarea{
+    border:1px solid #bec2d2;
+    border-radius:5px;
+    font-size:1em;
+    line-height:1.345em;
+    padding:3px;
+    outline:none;
+  }
+  &__input_text:focus,
+  &__textarea:focus{
+    box-shadow:0 0 3px #7888c7;
+  }
+  &__button{
+display:block;
+    margin:0 auto;
+    background: #7d96df;
+    color:white;
+    border:0;
+    padding:8px 20px;
+    border-radius:5px;
+    cursor:pointer;
+    transition: 0.2s all;
+    font-weight:bold;
+  }
+  &__button:hover{
+    box-shadow:0 0 3px #55618d;
+  }
+}
+
+
+

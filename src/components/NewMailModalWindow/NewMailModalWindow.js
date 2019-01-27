@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import ModalWindow from "../ModalWindow/ModalWindow";
-import NewMailForm from "../NewMailForm/NewMailForm";
+import NewMail from "../NewMail/NewMail";
 import {connect} from 'react-redux';
 import {CLOSE_NEW_MAIL_WINDOW} from '../../actions/layout';
 
@@ -27,7 +27,7 @@ const NewMailModalWindow = (props) => {
                 onClose={() => (props.closeNewMailWindow())}
                 isOpen = {props.isOpen}
             >
-                <NewMailForm
+                <NewMail
                     isActive = {props.isOpen}
                 />
             </ModalWindow>

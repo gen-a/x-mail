@@ -1,0 +1,25 @@
+.GnButton {
+  display: inline-block;
+  & button {
+    display: block;
+    margin: 0 2px;
+    background: #7d96df;
+    color: white;
+    border: 0;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s all;
+    font-weight: bold;
+    width:80px;
+    box-sizing: border-box;
+    &:hover {
+      box-shadow: 0 0 3px #55618d;
+    }
+    &[disabled]{
+      background-color: #b1bcd7;
+      cursor: default;
+      box-shadow: none;
+    }
+  }
+}

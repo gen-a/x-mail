@@ -1,0 +1,71 @@
+@import 'variables';
+
+.GnField {
+  display: flex;
+  margin-bottom: 4px;
+
+  & input[type="text"],
+  & textarea {
+
+    box-sizing: border-box;
+    border: 1px solid #bec2d2;
+    border-radius: 5px;
+    font-size: 1em;
+    line-height: 1.345em;
+    padding: 3px;
+    width: 100%;
+    outline: none;
+    min-height:32px;
+  }
+  &_required{
+    label {
+      font-weight:bold;
+    }
+  }
+  &_active {
+    & input[type="text"],
+    & textarea,
+    & input[type="text"]:focus,
+    & textarea:focus {
+      box-shadow: 0 0 2px #6170c7;
+    }
+  }
+
+  &_failed {
+    & input[type="text"],
+    & textarea,
+    & input[type="text"]:focus,
+    & textarea:focus {
+      border: 1px solid red;
+    }
+  }
+  &__label {
+    flex-basis: 100px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    font-size:0.875em;
+  }
+  &__input {
+    flex-grow: 1;
+    position:relative;
+    padding-bottom:18px;
+  }
+  &__icon{
+    flex-basis: 32px;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+
+  &__error_message {
+    color: #cf1f00;
+    font-size: 0.75em;
+    line-height: 1.5em;
+    position:absolute;
+    width:100%;
+    bottom:0;
+    left:0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

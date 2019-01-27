@@ -1,17 +1,17 @@
-import axios from 'axios';
+import axios from 'axios'
+import uuidv4 from 'uuid/v4'
+import {reset} from 'redux-form'
+import {SubmissionError} from 'redux-form'
 
+
+export const ADD_MAIL_NEW_MAIL = 'ADD_MAIL_NEW_MAIL';
 export const UPD_MAIL_ATTRIBUTE_PENDING = 'UPD_MAIL_ATTRIBUTE_PENDING';
 export const UPD_MAIL_ATTRIBUTE_FULFILLED = 'UPD_MAIL_ATTRIBUTE_FULFILLED';
 export const UPD_MAIL_ATTRIBUTE_REJECTED = 'UPD_MAIL_ATTRIBUTE_REJECTED';
-
 export const DEL_MAIL_PENDING = 'DEL_MAIL_PENDING';
 export const DEL_MAIL_FULFILLED = 'DEL_MAIL_FULFILLED';
 export const DEL_MAIL_REJECTED = 'DEL_MAIL_REJECTED';
-
-export const SEND_MAIL = 'SEND_MAIL';
-
 export const TOGGLE_OPEN_MAIL = 'TOGGLE_OPEN_MAIL';
-
 export const FETCH_MAILS_PENDING = 'FETCH_MAILS_PENDING';
 export const FETCH_MAILS_FULFILLED = 'FETCH_MAILS_FULFILLED';
 export const FETCH_MAILS_REJECTED = 'FETCH_MAILS_REJECTED';
@@ -106,4 +106,28 @@ export function toggleOpenMail(id) {
     }
 }
 
+export function addMail(data) {
+    return (dispatch, getState) => {
+
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        return sleep(1000)
+            .then(() => {
+                if (['pugachevsky@gmail.com'].includes(data.email)) {
+                    throw new SubmissionError({
+                        email: 'Sad email',
+                        body: 'Stupid body',
+                        subject: 'Crazy subject',
+
+                        _error: 'No letter has been sent'
+                    });
+                } else {
+                    data.id = uuidv4();
+                    dispatch(
+                        {type: ADD_MAIL_NEW_MAIL, payload: data}
+                    );
+                    dispatch(reset('newMail'))
+                }
+            });
+    }
+}
 

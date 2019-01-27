@@ -9,7 +9,7 @@ import {
     UPD_MAIL_ATTRIBUTE_FULFILLED,
     UPD_MAIL_ATTRIBUTE_REJECTED,
     TOGGLE_OPEN_MAIL,
-    SEND_MAIL
+    ADD_MAIL_NEW_MAIL
 } from '../actions/mails';
 
 
@@ -84,7 +84,7 @@ function mails(state = initialState, action) {
                 error:action.payload
             };
 
-        case SEND_MAIL:
+        case ADD_MAIL_NEW_MAIL:
             let updatedSentMailList = [...state.mailList.outbox];
             updatedSentMailList.push(action.payload);
             return {

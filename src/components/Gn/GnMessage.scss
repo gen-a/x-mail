@@ -1,0 +1,26 @@
+.GnMessage {
+  border: 1px solid grey;
+  border-radius: 6px;
+  padding: 0.375em 1em 0.5em 1em;
+  margin-bottom: 1em;
+  font-size:0.875em;
+  line-height:1.5em;
+  font-weight:bold;
+
+  &_error {
+    background: #fbcfcd;
+    border-color: #ffb595;
+    color: #834846;
+  }
+
+  &_info {
+    background: #d5d9f4;
+    border-color: #415f92;
+    color: #2b3e60;
+  }
+  &_success{
+    background: #dcf4e3;
+    border-color: #5f9274;
+    color: #334e3e;
+  }
+}
