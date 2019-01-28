@@ -3,7 +3,6 @@ import uuidv4 from 'uuid/v4'
 import {reset} from 'redux-form'
 import {SubmissionError} from 'redux-form'
 
-
 export const ADD_MAIL_NEW_MAIL = 'ADD_MAIL_NEW_MAIL';
 export const UPD_MAIL_ATTRIBUTE_PENDING = 'UPD_MAIL_ATTRIBUTE_PENDING';
 export const UPD_MAIL_ATTRIBUTE_FULFILLED = 'UPD_MAIL_ATTRIBUTE_FULFILLED';

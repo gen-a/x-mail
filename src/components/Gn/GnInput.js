@@ -12,7 +12,7 @@ function GnInput({input, type, placeholder, meta, label, required}) {
         <GnField
             id={id}
             required={required}
-            error={meta.touched && meta.error}
+            error={meta.touched && typeof(meta.error) === 'string' ? meta.error : ''}
             active={meta.active}
             label={label}
         >

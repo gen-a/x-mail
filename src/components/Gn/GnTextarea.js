@@ -8,7 +8,13 @@ function GnTextarea({input, placeholder, meta, label, required}) {
     counter++;
     let id = 'textarea_' + counter;
     return (
-        <GnField required={required} error={meta.touched && meta.error} active={meta.active} label={label} id={id}>
+        <GnField
+            required={required}
+            error={meta.touched && typeof(meta.error) === 'string' ? meta.error : ''}
+            active={meta.active}
+            label={label}
+            id={id}
+        >
             <textarea {...input} id={id} placeholder={placeholder}/>
         </GnField>
     );

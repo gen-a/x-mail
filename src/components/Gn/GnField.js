@@ -49,13 +49,13 @@ GnField.propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     children: PropTypes.element.isRequired,
-    error: PropTypes.bool|PropTypes.string,
+    error: PropTypes.string,
     active: PropTypes.bool,
     required: PropTypes.bool
 };
 
 GnField.defaultProps = {
-    error: false,
+    error: '',
     active: false,
     required: false
 };

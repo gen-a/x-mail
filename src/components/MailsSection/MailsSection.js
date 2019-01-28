@@ -19,7 +19,7 @@ class MailsSection extends Component {
         this.props.fetchMails();
     }
 
-    render() {
+    render(params) {
 
         let activeList = this.props.match.params.list || "inbox";
         let location = this.props.location;
